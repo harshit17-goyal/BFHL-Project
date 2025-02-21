@@ -5,7 +5,13 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: [
+      'http://localhost:3000',
+      'https://your-frontend.vercel.app' // Add your frontend Vercel URL here
+    ],
+    methods: ['GET', 'POST']
+  }));
 app.use(express.json());
 
 // GET endpoint
