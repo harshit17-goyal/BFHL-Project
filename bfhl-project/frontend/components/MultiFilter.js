@@ -1,7 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function MultiFilter({ onChange }) {
+export default function MultiFilter({ onChange, data }) {
   const [selectedOptions, setSelectedOptions] = useState(['Numbers', 'Highest Alphabet']);
+
+  // Update available options based on data
+  useEffect(() => {
+    if (data) {
+      const availableOptions = [];
+      if (data.numbers && data.numbers.length > 0) {
+        availableOptions.push('Numbers');
+      }
+      if (data.alphabets && data.alphabets.length > 0) {
+        availableOptions.push('Highest Alphabet');
+      }
+      setSelectedOptions(availableOptions);
+      onChange(availableOptions);
+    }
+  }, [data]);
 
   const handleChange = (option) => {
     const newSelection = selectedOptions.includes(option)
@@ -12,6 +27,11 @@ export default function MultiFilter({ onChange }) {
     onChange(newSelection);
   };
 
+  // Only show options that have corresponding data
+  const availableOptions = [];
+  if (data?.numbers?.length > 0) availableOptions.push('Numbers');
+  if (data?.alphabets?.length > 0) availableOptions.push('Highest Alphabet');
+
   return (
     <div className="w-full max-w-2xl mx-auto mt-4">
       <label className="block text-sm font-medium mb-2">
@@ -19,7 +39,7 @@ export default function MultiFilter({ onChange }) {
       </label>
       <div className="relative">
         <div className="border rounded-md p-2 flex flex-wrap gap-2">
-          {selectedOptions.map(option => (
+          {availableOptions.map(option => (
             <span 
               key={option}
               className="bg-gray-100 px-2 py-1 rounded-md flex items-center"

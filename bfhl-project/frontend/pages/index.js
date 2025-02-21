@@ -30,33 +30,34 @@ export default function Home() {
     }
   };
 
-  return (
-    <>
-      <Head>
-        <title>{ROLL_NUMBER}</title>
-      </Head>
-
-      <main className="container mx-auto px-4 py-8">
-        <Form onSubmit={handleSubmit} />
-        
-        {apiResponse && (
-          <>
-            <MultiFilter 
-              onChange={setSelectedFilters}
-            />
-            <Results 
-              data={apiResponse}
-              filters={selectedFilters}
-            />
-          </>
-        )}
-
-        {loading && (
-          <div className="text-center mt-4">
-            Processing...
-          </div>
-        )}
-      </main>
-    </>
-  );
-}
+    return (
+      <>
+        <Head>
+          <title>{ROLL_NUMBER}</title>
+        </Head>
+  
+        <main className="container mx-auto px-4 py-8">
+          <Form onSubmit={handleSubmit} />
+          
+          {apiResponse && (
+            <>
+              <MultiFilter 
+                onChange={setSelectedFilters}
+                data={apiResponse}
+              />
+              <Results 
+                data={apiResponse}
+                filters={selectedFilters}
+              />
+            </>
+          )}
+  
+          {loading && (
+            <div className="text-center mt-4">
+              Processing...
+            </div>
+          )}
+        </main>
+      </>
+    );
+  }

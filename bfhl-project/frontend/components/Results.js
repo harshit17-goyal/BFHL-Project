@@ -4,7 +4,7 @@ export default function Results({ data, filters }) {
     const renderFilteredResponse = () => {
       const response = [];
   
-      if (filters.includes('Numbers')) {
+      if (filters.includes('Numbers') && data.numbers && data.numbers.length > 0) {
         response.push(
           <div key="numbers">
             <span className="font-bold">Numbers: </span>
@@ -13,7 +13,9 @@ export default function Results({ data, filters }) {
         );
       }
   
-      if (filters.includes('Highest Alphabet')) {
+      if (filters.includes('Highest Alphabet') && 
+          data.highest_alphabet && 
+          data.highest_alphabet.length > 0) {
         response.push(
           <div key="highest">
             <span className="font-bold">Highest Alphabet: </span>
