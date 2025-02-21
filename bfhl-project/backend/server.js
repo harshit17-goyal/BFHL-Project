@@ -8,7 +8,7 @@ const app = express();
 app.use(cors({
     origin: [
       'http://localhost:3000',
-      'https://your-frontend.vercel.app' // Add your frontend Vercel URL here
+      'https://bfhl-project-harshit.vercel.app/' // Add your frontend Vercel URL here
     ],
     methods: ['GET', 'POST']
   }));
