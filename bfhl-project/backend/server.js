@@ -4,24 +4,26 @@ require('dotenv').config();
 
 const app = express();
 
-// Middleware
+// Updated CORS configuration
 app.use(cors({
-    origin: [
-      'http://localhost:3000',
-      'https://bfhl-project-harshit.vercel.app/' // Add your frontend Vercel URL here
-    ],
-    methods: ['GET', 'POST']
-  }));
+  origin: [
+    'https://bfhl-project-harshit.vercel.app',
+    'http://localhost:3000'
+  ],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
-// GET endpoint
+// Your existing routes
 app.get('/bfhl', (req, res) => {
     res.status(200).json({
         operation_code: 1
     });
 });
 
-// POST endpoint
 app.post('/bfhl', (req, res) => {
     try {
         const { data } = req.body;
@@ -39,9 +41,9 @@ app.post('/bfhl', (req, res) => {
 
         res.status(200).json({
             is_success: true,
-            user_id: "harshit_goyal_17072004", // Replace with your details
-            email: "22bcs16612@cuchd.in", // Replace with your email
-            roll_number: "22BCS16612", // Replace with your roll number
+            user_id: "john_doe_17091999", // Replace with your details
+            email: "john@xyz.com", // Replace with your email
+            roll_number: "ABCD123", // Replace with your roll number
             numbers: numbers,
             alphabets: alphabets,
             highest_alphabet: highest_alphabet
