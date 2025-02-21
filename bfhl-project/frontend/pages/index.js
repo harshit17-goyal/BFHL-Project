@@ -8,7 +8,7 @@ const ROLL_NUMBER = "YOUR_ROLL_NUMBER"; // Replace with your roll number
 
 export default function Home() {
   const [apiResponse, setApiResponse] = useState(null);
-  const [selectedFilters, setSelectedFilters] = useState(['Numbers', 'Highest Alphabet']);
+  const [selectedFilters, setSelectedFilters] = useState(['Numbers', 'Alphabets', 'Highest Alphabet']);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -49,18 +49,6 @@ export default function Home() {
       <main className="container mx-auto px-4 py-8">
         <Form onSubmit={handleSubmit} />
         
-        {error && (
-          <div className="text-red-500 text-center mt-4">
-            Error: {error}
-          </div>
-        )}
-
-        {loading && (
-          <div className="text-center mt-4">
-            Processing...
-          </div>
-        )}
-
         {apiResponse && (
           <>
             <MultiFilter 
@@ -72,6 +60,12 @@ export default function Home() {
               filters={selectedFilters}
             />
           </>
+        )}
+
+        {loading && (
+          <div className="text-center mt-4">
+            Processing...
+          </div>
         )}
       </main>
     </>

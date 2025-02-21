@@ -13,6 +13,15 @@ export default function Results({ data, filters }) {
         );
       }
   
+      if (filters.includes('Alphabets') && data.alphabets && data.alphabets.length > 0) {
+        response.push(
+          <div key="alphabets">
+            <span className="font-bold">Alphabets: </span>
+            {data.alphabets.join(',')}
+          </div>
+        );
+      }
+  
       if (filters.includes('Highest Alphabet') && 
           data.highest_alphabet && 
           data.highest_alphabet.length > 0) {

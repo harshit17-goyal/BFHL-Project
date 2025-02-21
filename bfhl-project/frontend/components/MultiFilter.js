@@ -1,26 +1,22 @@
 import { useState, useEffect } from 'react';
 
 export default function MultiFilter({ onChange, data }) {
-  const [selectedOptions, setSelectedOptions] = useState(['Numbers', 'Highest Alphabet']);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState(['Numbers', 'Alphabets', 'Highest Alphabet']);
 
-  useEffect(() => {
-    if (data) {
-      const availableOptions = [];
-      if (data.numbers && data.numbers.length > 0) {
-        availableOptions.push('Numbers');
-      }
-      if (data.alphabets && data.alphabets.length > 0) {
-        availableOptions.push('Highest Alphabet');
-      }
-      setSelectedOptions(availableOptions);
-      onChange(availableOptions);
+  const allOptions = [
+    { label: 'Numbers', value: 'Numbers' },
+    { label: 'Alphabets', value: 'Alphabets' },
+    { label: 'Highest Alphabet', value: 'Highest Alphabet' }
+  ];
+
+  const handleOptionClick = (option) => {
+    let newSelection;
+    if (selectedOptions.includes(option)) {
+      newSelection = selectedOptions.filter(item => item !== option);
+    } else {
+      newSelection = [...selectedOptions, option];
     }
-  }, [data, onChange]);
-
-  const handleChange = (option) => {
-    const newSelection = selectedOptions.includes(option)
-      ? selectedOptions.filter(item => item !== option)
-      : [...selectedOptions, option];
     setSelectedOptions(newSelection);
     onChange(newSelection);
   };
@@ -31,22 +27,37 @@ export default function MultiFilter({ onChange, data }) {
         Multi Filter
       </label>
       <div className="relative">
-        <div className="border rounded-md p-2 flex flex-wrap gap-2">
-          {selectedOptions.map(option => (
-            <span 
-              key={option}
-              className="bg-gray-100 px-2 py-1 rounded-md flex items-center"
-            >
-              {option}
-              <button
-                onClick={() => handleChange(option)}
-                className="ml-2 text-gray-500 hover:text-gray-700"
+        {/* Dropdown Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full px-4 py-2 text-left bg-white border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          {selectedOptions.length > 0
+            ? selectedOptions.join(', ')
+            : 'Select options'}
+          <span className="absolute right-4 top-3">▼</span>
+        </button>
+
+        {/* Dropdown Menu */}
+        {isOpen && (
+          <div className="absolute w-full mt-1 bg-white border rounded-md shadow-lg z-10">
+            {allOptions.map((option) => (
+              <div
+                key={option.value}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
+                onClick={() => handleOptionClick(option.value)}
               >
-                ×
-              </button>
-            </span>
-          ))}
-        </div>
+                <input
+                  type="checkbox"
+                  checked={selectedOptions.includes(option.value)}
+                  onChange={() => {}}
+                  className="mr-2"
+                />
+                {option.label}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
